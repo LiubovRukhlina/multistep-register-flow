@@ -5,18 +5,23 @@ import { useFormContext } from 'react-hook-form';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-const cars = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
-  { label: 'The Dark Knight', year: 2008 },
-  { label: '12 Angry Men', year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-];
+import { useQuery } from '@tanstack/react-query';
+import { Car, getCars } from '../pages/api/cars';
 
 function CarInfo() {
   const { register, setValue } = useFormContext();
-
+  const { data: cars } = useQuery({
+    queryKey: ['cars'],
+    queryFn: getCars,
+    select: (carsData) => {
+      return carsData.map((el: Car) => ({
+        ...el,
+        label: `${el.make} ${el.model}`,
+        key: `${el.make} ${el.model}`,
+      }));
+    },
+  });
+  console.log('info ', cars);
   return (
     <>
       <Autocomplete

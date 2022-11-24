@@ -24,7 +24,7 @@ const schema = yup
   })
   .required();
 const SignupForm = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
 
   const HeaderTitles = [
     'Sign Up',
