@@ -1,29 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
-function FinanceInfo({ signupData, setSignupData }) {
-  const { register, handleSubmit } = useForm();
-  const [data, setData] = useState('');
+import { useFormContext } from 'react-hook-form';
+
+import ControlledInput from './ControlledInput';
+
+function FinanceInfo() {
+  const { control } = useFormContext();
+
   return (
-    <form onSubmit={handleSubmit()}>
-      <input
-        {...register('iban', { required: true })}
-        placeholder="IBAN"
-        value={signupData.iban}
-        onChange={(event) =>
-          setSignupData({ ...signupData, iban: event.target.value })
-        }
-      />
-      <input
-        {...register('bic', { required: true })}
-        placeholder="bic"
-        value={signupData.bic}
-        onChange={(event) =>
-          setSignupData({ ...signupData, bic: event.target.value })
-        }
-      ></input>
-    </form>
+    <>
+      <ControlledInput control={control} label="IBAN" name="iban" />
+      <ControlledInput control={control} label="BIC" name="bic" />
+    </>
   );
 }
 

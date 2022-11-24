@@ -1,37 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { FormControl } from '@mui/material';
+import ControlledInput from './ControlledInput';
 
-function AuthInfo({ signupData, setSignupData }) {
-  const { register, handleSubmit } = useForm();
-  const [data, setData] = useState('');
+function AuthInfo() {
+  const { control } = useFormContext();
   return (
-    <form onSubmit={handleSubmit()}>
-      <input
-        {...register('email', { required: true })}
-        placeholder="Email"
-        value={signupData.email}
-        onChange={(event) =>
-          setSignupData({ ...signupData, email: event.target.value })
-        }
+    <>
+      <FormControl variant="standard">
+        <ControlledInput control={control} label="Email" name="email" />
+      </FormControl>
+      <FormControl variant="standard">
+        <ControlledInput control={control} label="Password" name="password" />
+      </FormControl>
+      <ControlledInput
+        control={control}
+        label="Confirm Password"
+        name="confirmPassword"
       />
-      <input
-        {...register('password', { required: true })}
-        placeholder="Password"
-        value={signupData.password}
-        onChange={(event) =>
-          setSignupData({ ...signupData, password: event.target.value })
-        }
-      ></input>
-      <input
-        {...register('confirmPassword', { required: true })}
-        placeholder="Confirm password"
-        value={signupData.confirmPassword}
-        onChange={(event) =>
-          setSignupData({ ...signupData, confirmPassword: event.target.value })
-        }
-      ></input>
-    </form>
+    </>
   );
 }
 
