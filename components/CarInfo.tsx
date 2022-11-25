@@ -24,7 +24,7 @@ function CarInfo() {
   });
 
   return (
-    <>
+    <div className="car-info-container">
       <Autocomplete
         disablePortal
         id="combo-box-demo"
@@ -59,7 +59,7 @@ function CarInfo() {
         </div>
       </Button>
       <div>{fName}</div>
-    </>
+    </div>
   );
 }
 

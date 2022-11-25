@@ -6,7 +6,7 @@ import ControlledInput from './ControlledInput';
 function AuthInfo() {
   const { control } = useFormContext();
   return (
-    <>
+    <div className="sign-up-container">
       <FormControl variant="standard">
         <ControlledInput control={control} label="Email" name="email" />
       </FormControl>
@@ -18,7 +18,7 @@ function AuthInfo() {
         label="Confirm Password"
         name="confirmPassword"
       />
-    </>
+    </div>
   );
 }
 

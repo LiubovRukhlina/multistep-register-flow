@@ -18,7 +18,7 @@ export async function getStaticProps() {
 
 function Signup() {
   return (
-    <div>
+    <div className="App">
       <SignupForm />
     </div>
   );

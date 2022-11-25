@@ -64,11 +64,7 @@ const schema = yup
   })
   .required();
 
-const steps = [
-  'Sign Up',
-  'Provide your bank details',
-  'Provide your car information',
-];
+const steps = ['Sign Up', 'Bank card details', 'Car information'];
 const SignupForm = () => {
   const [step, setStep] = useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
@@ -101,13 +97,13 @@ const SignupForm = () => {
   const onSubmit = (data: Record<string, string>) => {
     toast.success('🦄 Form submitted!', {
       position: 'top-center',
-      autoClose: 1000,
+      autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'dark',
+      theme: 'light',
     });
     delete data.carRegistration;
     exportData(data);
