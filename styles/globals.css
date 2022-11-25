@@ -1,24 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-.App {
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  font-family: montserrat, arial, verdana;
+  
   background-image: url('https://i.guim.co.uk/img/media/a57f6c07dc9f8992f2e2831cd8fb38d20335ad96/101_596_2607_1564/master/2607.jpg?width=1900&quality=85&dpr=1&s=none');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  place-items: center;
 }
 
-body {
-  margin: 0%;
-  padding: 0%;
-  display: felx;
-  align-items: center;
-  font-family: montserrat, arial, verdana;
+/* 
+.App {
+
 }
+
 
 .form {
   width: 100%;
@@ -144,4 +146,4 @@ input {
 input:focus {
   border: 1px solid rgb(98, 0, 255);
   margin: 20px;
-}
+} */

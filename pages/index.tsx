@@ -3,6 +3,7 @@ import SignupForm from '../components/SignupForm';
 
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { getCars } from './api/cars';
+import { Container } from '@mui/material';
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -18,9 +19,9 @@ export async function getStaticProps() {
 
 function Signup() {
   return (
-    <div className="App">
+    <Container maxWidth="md">
       <SignupForm />
-    </div>
+    </Container>
   );
 }
 
