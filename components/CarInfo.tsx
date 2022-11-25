@@ -10,6 +10,7 @@ import { Car, getCars } from '../pages/api/cars';
 
 function CarInfo() {
   const { register, setValue } = useFormContext();
+  let fName = '';
   const { data: cars } = useQuery({
     queryKey: ['cars'],
     queryFn: getCars,
@@ -21,7 +22,7 @@ function CarInfo() {
       }));
     },
   });
-  console.log('info ', cars);
+
   return (
     <>
       <Autocomplete
@@ -38,21 +39,26 @@ function CarInfo() {
         )}
       />
 
-      <Button variant="contained" endIcon={<PhotoCamera />} component="label">
-        Upload
-        <input
-          hidden
-          accept="image/*"
-          type="file"
-          {...register('carRegistration', {
-            onChange: (v) => {
-              const path = v.target.value;
-              const fileName = path.split('\\').pop();
-              setValue('fileName', fileName);
-            },
-          })}
-        />
+      <Button variant="contained" startIcon={<PhotoCamera />} component="label">
+        Upload car registration:
+        <br />
+        <div>
+          <input
+            accept="image/*"
+            type="file"
+            {...register('carRegistration', {
+              onChange: (v) => {
+                const path = v.target.value;
+                const fileName = path.split('\\').pop();
+                setValue('fileName', fileName);
+                fName = fileName;
+                console.log(fName);
+              },
+            })}
+          />
+        </div>
       </Button>
+      <div>{fName}</div>
     </>
   );
 }

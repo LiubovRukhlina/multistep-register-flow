@@ -9,8 +9,22 @@ function FinanceInfo() {
 
   return (
     <>
-      <ControlledInput control={control} label="IBAN" name="iban" />
-      <ControlledInput control={control} label="BIC" name="bic" />
+      <ControlledInput
+        control={control}
+        label="Credit Card Number"
+        name="CreditCardNumber"
+      />
+      <ControlledInput
+        control={control}
+        label="Cardholder Name"
+        name="CardholderName"
+      />
+      <ControlledInput
+        control={control}
+        label="Expiration date"
+        name="ExpirationDate"
+      />
+      <ControlledInput control={control} label="CVV" name="cvv" />
     </>
   );
 }

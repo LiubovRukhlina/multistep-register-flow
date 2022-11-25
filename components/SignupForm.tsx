@@ -9,6 +9,7 @@ import FinanceInfo from './FinanceInfo';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import valid from 'card-validator';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Stepper from '@mui/material/Stepper';
@@ -22,13 +23,43 @@ const schema = yup
       .string()
       .required('No password provided.')
       .min(8, 'Password is too short - min 8 chars')
-      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+      .matches(/[a-zA-Z]/, 'Password should contain a letter'),
     confirmPassword: yup
       .string()
       .required()
       .oneOf([yup.ref('password'), null], 'Passwords must match'),
-    iban: yup.string().required(),
-    bic: yup.string().required(),
+    CreditCardNumber: yup
+      .string()
+      .test(
+        'test-number', // this is used internally by yup
+        'Credit Card number is invalid', //validation message
+        (value) => valid.number(value).isValid
+      ) // return true false based on validation
+      .required(),
+    CardholderName: yup
+      .string()
+      .test(
+        'test-number', // this is used internally by yup
+        'Name is invalid', //validation message
+        (value) => valid.cardholderName(value).isValid
+      ) // return true false based on validation
+      .required(),
+    ExpirationDate: yup
+      .string()
+      .test(
+        'test-number', // this is used internally by yup
+        'Expiration date is invalid', //validation message
+        (value) => valid.expirationDate(value).isValid
+      ) // return true false based on validation
+      .required(),
+    cvv: yup
+      .string()
+      .test(
+        'test-number', // this is used internally by yup
+        'CVV is invalid', //validation message
+        (value) => valid.cvv(value).isValid
+      ) // return true false based on validation
+      .required(),
     car: yup.string().required(),
   })
   .required();
@@ -130,7 +161,7 @@ const SignupForm = () => {
 
   return (
     <div className="form">
-      <div className="container">
+      <div className="form-container">
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <div className="header">
@@ -177,7 +208,12 @@ const SignupForm = () => {
                       }
                     }
                     if (step === 1) {
-                      const result = await methods.trigger(['iban', 'bic']);
+                      const result = await methods.trigger([
+                        'CreditCardNumber',
+                        'CardholderName',
+                        'ExpirationDate',
+                        'cvv',
+                      ]);
                       if (result) {
                         handleNext();
                         handleComplete();

@@ -44,9 +44,9 @@ function ControlledInput({ control, name, label }: ControlledInputProps) {
         }
       />
       {name === 'password' || name === 'confirmPassword' ? (
-        <span className="icon" onClick={toggle}>
+        <div className="icon" onClick={toggle}>
           {isVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-        </span>
+        </div>
       ) : null}
 
       {error ? <FormHelperText>{error.message}</FormHelperText> : null}
