@@ -24,7 +24,7 @@ function CarInfo() {
   });
 
   return (
-    <div className="car-info-container">
+    <div className="controlled-input-container">
       <Autocomplete
         disablePortal
         id="combo-box-demo"
@@ -39,8 +39,8 @@ function CarInfo() {
         )}
       />
 
-      <Button variant="contained" startIcon={<PhotoCamera />} component="label">
-        Upload car registration:
+      <Button variant="outlined" startIcon={<PhotoCamera />} component="label">
+        Upload car registration: &nbsp;
         <br />
         <div>
           <input

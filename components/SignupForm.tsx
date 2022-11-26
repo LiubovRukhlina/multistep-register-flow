@@ -204,7 +204,7 @@ const SignupForm = () => {
           </Stepper>
           <Box>{StepSelector()}</Box>
           <div className="footer">
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={50}>
               <Button
                 onClick={() => {
                   handleBack();

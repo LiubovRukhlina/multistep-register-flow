@@ -6,7 +6,7 @@ import ControlledInput from './common/ControlledInput';
 function AuthInfo() {
   const { control } = useFormContext();
   return (
-    <Box sx={{ display: 'flex', displayDirection: 'column', flex: 1 }}>
+    <Box className="controlled-input-container">
       <FormControl variant="standard">
         <ControlledInput control={control} label="Email" name="email" />
       </FormControl>

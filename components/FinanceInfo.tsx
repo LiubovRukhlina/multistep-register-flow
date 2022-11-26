@@ -8,7 +8,7 @@ function FinanceInfo() {
   const { control } = useFormContext();
 
   return (
-    <div className="bank-details-container">
+    <div className="controlled-input-container">
       <ControlledInput
         control={control}
         label="Credit Card Number"
