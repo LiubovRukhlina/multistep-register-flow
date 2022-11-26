@@ -69,7 +69,7 @@ const schema = yup
 const steps = ['Sign Up', 'Bank card details', 'Car information'];
 
 const SignupForm = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
