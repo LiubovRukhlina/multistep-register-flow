@@ -1,26 +1,30 @@
-html,
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: montserrat, arial, verdana;
+
+  background-image: url('https://i.guim.co.uk/img/media/a57f6c07dc9f8992f2e2831cd8fb38d20335ad96/101_596_2607_1564/master/2607.jpg?width=1900&quality=85&dpr=1&s=none');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.controlled-input-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+input:focus {
+  border: 1px solid rgb(98, 0, 255);
+  margin: 5px;
 }
