@@ -46,7 +46,7 @@ function ControlledInput({
     <FormControl
       variant="outlined"
       error={!!error?.message}
-      sx={{ m: 1, width: 200 }}
+      sx={{ m: 1, width: 300 }}
     >
       <InputLabel htmlFor={field.name}>{label}</InputLabel>
       <OutlinedInput

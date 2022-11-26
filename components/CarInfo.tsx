@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -9,8 +9,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Car, getCars } from '../pages/api/cars';
 
 function CarInfo() {
-  const { register, setValue } = useFormContext();
-  let fName = '';
+  const { register } = useFormContext();
+  const [fName, setFName] = useState<string>();
+
   const { data: cars } = useQuery({
     queryKey: ['cars'],
     queryFn: getCars,
@@ -29,7 +30,7 @@ function CarInfo() {
         disablePortal
         id="combo-box-demo"
         options={cars}
-        sx={{ width: 300 }}
+        sx={{ m: 1, width: 300 }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -39,19 +40,24 @@ function CarInfo() {
         )}
       />
 
-      <Button variant="outlined" startIcon={<PhotoCamera />} component="label">
-        Upload car registration: &nbsp;
-        <br />
+      <Button
+        variant="contained"
+        endIcon={<PhotoCamera />}
+        component="label"
+        sx={{ m: 1, width: 300 }}
+      >
+        Upload car registration:
         <div>
           <input
+            hidden
             accept="image/*"
             type="file"
             {...register('carRegistration', {
               onChange: (v) => {
                 const path = v.target.value;
                 const fileName = path.split('\\').pop();
-                setValue('fileName', fileName);
-                fName = fileName;
+
+                setFName(fileName);
                 console.log(fName);
               },
             })}
