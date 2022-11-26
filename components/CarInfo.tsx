@@ -1,6 +1,5 @@
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
-
 import { useFormContext } from 'react-hook-form';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -56,9 +55,7 @@ function CarInfo() {
               onChange: (v) => {
                 const path = v.target.value;
                 const fileName = path.split('\\').pop();
-
                 setFName(fileName);
-                console.log(fName);
               },
             })}
           />

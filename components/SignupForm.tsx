@@ -33,34 +33,34 @@ const schema = yup
     CreditCardNumber: yup
       .string()
       .test(
-        'test-number', // this is used internally by yup
-        'Credit Card number is invalid', //validation message
+        'test-number',
+        'Credit Card number is invalid',
         (value) => valid.number(value).isValid
-      ) // return true false based on validation
+      )
       .required(),
     CardholderName: yup
       .string()
       .test(
-        'test-number', // this is used internally by yup
-        'Name is invalid', //validation message
+        'test-number',
+        'Name is invalid',
         (value) => valid.cardholderName(value).isValid
-      ) // return true false based on validation
+      )
       .required(),
     ExpirationDate: yup
       .string()
       .test(
-        'test-number', // this is used internally by yup
-        'Expiration date is invalid', //validation message
+        'test-number',
+        'Expiration date is invalid',
         (value) => valid.expirationDate(value).isValid
-      ) // return true false based on validation
+      )
       .required(),
     cvv: yup
       .string()
       .test(
-        'test-number', // this is used internally by yup
-        'CVV is invalid', //validation message
+        'test-number',
+        'CVV is invalid',
         (value) => valid.cvv(value).isValid
-      ) // return true false based on validation
+      )
       .required(),
     car: yup.string().required(),
   })
@@ -260,7 +260,7 @@ const SignupForm = () => {
       </FormProvider>
       <ToastContainer
         position="top-center"
-        autoClose={1000}
+        autoClose={3000}
         hideProgressBar
         newestOnTop={false}
         closeOnClick
