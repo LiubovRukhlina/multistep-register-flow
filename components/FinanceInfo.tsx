@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
-import ControlledInput from './ControlledInput';
+import ControlledInput from './common/ControlledInput';
 
 function FinanceInfo() {
   const { control } = useFormContext();

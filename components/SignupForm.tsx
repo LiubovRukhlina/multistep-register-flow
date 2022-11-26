@@ -11,10 +11,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import valid from 'card-validator';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { Box, Typography } from '@mui/material';
 
 const schema = yup
   .object({
@@ -65,6 +67,7 @@ const schema = yup
   .required();
 
 const steps = ['Sign Up', 'Bank card details', 'Car information'];
+
 const SignupForm = () => {
   const [step, setStep] = useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
@@ -77,6 +80,7 @@ const SignupForm = () => {
     'Provide your bank details',
     'Provide your car information',
   ];
+
   const StepSelector = () => {
     switch (step) {
       case 0:
@@ -91,9 +95,11 @@ const SignupForm = () => {
         console.log(`wrong page number`);
     }
   };
+
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+
   const onSubmit = (data: Record<string, string>) => {
     toast.success('🦄 Form submitted!', {
       position: 'top-center',
@@ -108,6 +114,7 @@ const SignupForm = () => {
     delete data.carRegistration;
     exportData(data);
   };
+
   const exportData = (data: Record<string, string>) => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(data)
@@ -118,10 +125,12 @@ const SignupForm = () => {
 
     link.click();
   };
+
   const handleStep = (step: number) => () => {
     setActiveStep(step);
     setStep(step);
   };
+
   const handleNext = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
@@ -131,9 +140,11 @@ const SignupForm = () => {
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
   const isLastStep = () => {
     return activeStep === totalSteps() - 1;
   };
@@ -149,6 +160,7 @@ const SignupForm = () => {
   const completedSteps = () => {
     return Object.keys(completed).length;
   };
+
   const handleComplete = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
@@ -156,81 +168,96 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="form">
-      <div className="form-container">
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <div className="header">
-              <h1>{HeaderTitles[step]}</h1>
-            </div>
-            <div className="stepper">
-              <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => (
-                  <Step key={label} completed={completed[index]}>
-                    <StepButton color="inherit" onClick={handleStep(index)}>
-                      {label}
-                    </StepButton>
-                  </Step>
-                ))}
-              </Stepper>
-            </div>
-            <div className="body">{StepSelector()}</div>
-            <div className="footer">
-              <Stack direction="row" spacing={2}>
-                <Button
-                  onClick={() => {
-                    handleBack();
-                    setStep((currentStep) => currentStep - 1);
-                  }}
-                  variant="contained"
-                  startIcon={<ArrowBackIosNewIcon />}
-                  disabled={step == 0}
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={async () => {
-                    if (step === 0) {
-                      const result = await methods.trigger([
-                        'email',
-                        'password',
-                        'confirmPassword',
-                      ]);
-                      if (result) {
-                        handleNext();
-                        handleComplete();
-                        setStep((currentStep) => currentStep + 1);
-                      } else {
-                      }
-                    }
-                    if (step === 1) {
-                      const result = await methods.trigger([
-                        'CreditCardNumber',
-                        'CardholderName',
-                        'ExpirationDate',
-                        'cvv',
-                      ]);
-                      if (result) {
-                        handleNext();
-                        handleComplete();
-                        setStep((currentStep) => currentStep + 1);
-                      }
-                    }
-                    if (step === 2) {
+    <Box
+      sx={{
+        backgroundColor: 'white',
+        borderRadius: 8,
+        boxShadow: '0 0 15px 1px rgba(0, 0, 0, 0.4)',
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        padding: 4,
+      }}
+    >
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <Typography
+            m={2}
+            mb={5}
+            variant="h1"
+            fontSize={48}
+            textAlign="center"
+          >
+            {HeaderTitles[step]}
+          </Typography>
+          <Stepper activeStep={activeStep} sx={{ margin: 3 }}>
+            {steps.map((label, index) => (
+              <Step key={label} completed={completed[index]}>
+                <StepButton color="inherit" onClick={handleStep(index)}>
+                  {label}
+                </StepButton>
+              </Step>
+            ))}
+          </Stepper>
+          <Box>{StepSelector()}</Box>
+          <div className="footer">
+            <Stack direction="row" spacing={2}>
+              <Button
+                onClick={() => {
+                  handleBack();
+                  setStep((currentStep) => currentStep - 1);
+                }}
+                variant="contained"
+                startIcon={<ArrowBackIosNewIcon />}
+                disabled={step == 0}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={async () => {
+                  if (step === 0) {
+                    const result = await methods.trigger([
+                      'email',
+                      'password',
+                      'confirmPassword',
+                    ]);
+                    if (result) {
+                      handleNext();
                       handleComplete();
+                      setStep((currentStep) => currentStep + 1);
+                    } else {
                     }
-                  }}
-                  variant="contained"
-                  endIcon={<ArrowForwardIosIcon />}
-                  type={step === HeaderTitles.length - 1 ? 'submit' : 'button'}
-                >
-                  {step === HeaderTitles.length - 1 ? 'Submit' : 'Next'}
-                </Button>
-              </Stack>
-            </div>
-          </form>
-        </FormProvider>
-      </div>
+                  }
+                  if (step === 1) {
+                    const result = await methods.trigger([
+                      'CreditCardNumber',
+                      'CardholderName',
+                      'ExpirationDate',
+                      'cvv',
+                    ]);
+                    if (result) {
+                      handleNext();
+                      handleComplete();
+                      setStep((currentStep) => currentStep + 1);
+                    }
+                  }
+                  if (step === 2) {
+                    handleComplete();
+                  }
+                }}
+                variant="contained"
+                endIcon={<ArrowForwardIosIcon />}
+                type={step === HeaderTitles.length - 1 ? 'submit' : 'button'}
+              >
+                {step === HeaderTitles.length - 1 ? 'Submit' : 'Next'}
+              </Button>
+            </Stack>
+          </div>
+        </form>
+      </FormProvider>
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -243,7 +270,7 @@ const SignupForm = () => {
         pauseOnHover
         theme="dark"
       />
-    </div>
+    </Box>
   );
 };
 
