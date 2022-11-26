@@ -3,8 +3,12 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import { useCallback, useState } from 'react';
-import { IconButton, InputAdornment } from '@mui/material';
+import { ChangeEventHandler, useCallback, useState } from 'react';
+import {
+  AutocompleteRenderInputParams,
+  IconButton,
+  InputAdornment,
+} from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 
@@ -13,7 +17,12 @@ type ControlledInputProps = {
   control: Control<FieldValues, any>;
   name: string;
   label?: string;
-  type?: 'text' | 'password';
+  type?: React.HTMLInputTypeAttribute;
+  accept?: string;
+  onChange?:
+    | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
+  autocompleteRenderInputParams?: AutocompleteRenderInputParams | undefined;
 };
 
 function ControlledInput({
@@ -21,6 +30,8 @@ function ControlledInput({
   name,
   label,
   type = 'text',
+  onChange,
+  autocompleteRenderInputParams,
 }: ControlledInputProps) {
   const {
     field,
@@ -50,7 +61,8 @@ function ControlledInput({
     >
       <InputLabel htmlFor={field.name}>{label}</InputLabel>
       <OutlinedInput
-        onChange={field.onChange} // send value to hook form
+        {...autocompleteRenderInputParams}
+        onChange={onChange || field.onChange} // send value to hook form
         onBlur={field.onBlur} // notify when input is touched/blur
         value={field.value} // input value
         label={label}

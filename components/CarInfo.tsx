@@ -1,16 +1,17 @@
 import { Button } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import { useQuery } from '@tanstack/react-query';
 import { Car, getCars } from '../pages/api/cars';
+import ControlledInput from './common/ControlledInput';
 
 function CarInfo() {
-  const { register, setValue } = useFormContext();
-  let fName = '';
+  const { control, setValue, register } = useFormContext();
+  const [fName, setFName] = useState<string>();
+
   const { data: cars } = useQuery({
     queryKey: ['cars'],
     queryFn: getCars,
@@ -31,19 +32,21 @@ function CarInfo() {
         options={cars}
         sx={{ width: 300 }}
         renderInput={(params) => (
-          <TextField
-            {...params}
+          <ControlledInput
+            autocompleteRenderInputParams={params}
+            control={control}
             label="Car Model"
-            {...register('car', { required: true })}
+            name="car"
           />
         )}
       />
 
-      <Button variant="outlined" startIcon={<PhotoCamera />} component="label">
-        Upload car registration: &nbsp;
+      <Button variant="outlined" endIcon={<PhotoCamera />} component="label">
+        Upload car registration
         <br />
         <div>
           <input
+            hidden
             accept="image/*"
             type="file"
             {...register('carRegistration', {
@@ -51,7 +54,7 @@ function CarInfo() {
                 const path = v.target.value;
                 const fileName = path.split('\\').pop();
                 setValue('fileName', fileName);
-                fName = fileName;
+                setFName(fileName);
                 console.log(fName);
               },
             })}
