@@ -183,7 +183,7 @@ const SignupForm = () => {
       }}
     >
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form>
           <Typography
             m={2}
             mb={5}
@@ -228,7 +228,6 @@ const SignupForm = () => {
                       handleNext();
                       handleComplete();
                       setStep((currentStep) => currentStep + 1);
-                    } else {
                     }
                   }
                   if (step === 1) {
@@ -246,13 +245,13 @@ const SignupForm = () => {
                   }
                   if (step === 2) {
                     handleComplete();
+                    methods.handleSubmit(onSubmit)();
                   }
                 }}
                 variant="contained"
                 endIcon={<ArrowForwardIosIcon />}
-                type={step === HeaderTitles.length - 1 ? 'submit' : 'button'}
               >
-                {step === HeaderTitles.length - 1 ? 'Submit' : 'Next'}
+                {isLastStep() ? 'Submit' : 'Next'}
               </Button>
             </Stack>
           </div>
