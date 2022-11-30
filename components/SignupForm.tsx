@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -69,7 +69,6 @@ const schema = yup
 const steps = ['Sign Up', 'Bank card details', 'Car information'];
 
 const SignupForm = () => {
-  const [step, setStep] = useState(0);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
@@ -82,7 +81,7 @@ const SignupForm = () => {
   ];
 
   const StepSelector = () => {
-    switch (step) {
+    switch (activeStep) {
       case 0:
         return <AuthInfo />;
 
@@ -128,7 +127,6 @@ const SignupForm = () => {
 
   const handleStep = (step: number) => () => {
     setActiveStep(step);
-    setStep(step);
   };
 
   const handleNext = () => {
@@ -183,7 +181,7 @@ const SignupForm = () => {
       }}
     >
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form>
           <Typography
             m={2}
             mb={5}
@@ -191,7 +189,7 @@ const SignupForm = () => {
             fontSize={48}
             textAlign="center"
           >
-            {HeaderTitles[step]}
+            {HeaderTitles[activeStep]}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ margin: 3 }}>
             {steps.map((label, index) => (
@@ -206,19 +204,16 @@ const SignupForm = () => {
           <div className="footer">
             <Stack direction="row" spacing={50}>
               <Button
-                onClick={() => {
-                  handleBack();
-                  setStep((currentStep) => currentStep - 1);
-                }}
+                onClick={handleBack}
                 variant="contained"
                 startIcon={<ArrowBackIosNewIcon />}
-                disabled={step == 0}
+                disabled={activeStep == 0}
               >
                 Back
               </Button>
               <Button
                 onClick={async () => {
-                  if (step === 0) {
+                  if (activeStep === 0) {
                     const result = await methods.trigger([
                       'email',
                       'password',
@@ -227,11 +222,9 @@ const SignupForm = () => {
                     if (result) {
                       handleNext();
                       handleComplete();
-                      setStep((currentStep) => currentStep + 1);
-                    } else {
                     }
                   }
-                  if (step === 1) {
+                  if (activeStep === 1) {
                     const result = await methods.trigger([
                       'CreditCardNumber',
                       'CardholderName',
@@ -241,18 +234,17 @@ const SignupForm = () => {
                     if (result) {
                       handleNext();
                       handleComplete();
-                      setStep((currentStep) => currentStep + 1);
                     }
                   }
-                  if (step === 2) {
+                  if (activeStep === 2) {
                     handleComplete();
+                    methods.handleSubmit(onSubmit)();
                   }
                 }}
                 variant="contained"
                 endIcon={<ArrowForwardIosIcon />}
-                type={step === HeaderTitles.length - 1 ? 'submit' : 'button'}
               >
-                {step === HeaderTitles.length - 1 ? 'Submit' : 'Next'}
+                {isLastStep() ? 'Submit' : 'Next'}
               </Button>
             </Stack>
           </div>
