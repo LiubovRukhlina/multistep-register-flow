@@ -27,7 +27,7 @@ export const getCars = async () => {
     fuel_type;
   const response = await fetch(url, {
     headers: {
-      'X-Api-Key': '1jWdoWTjNTSm4cOtrn6k0w==tajmBTGKuhTvdlWc',
+      'X-Api-Key': process.env.CAR_API_KEY || '',
     },
     cache: 'force-cache',
   });
